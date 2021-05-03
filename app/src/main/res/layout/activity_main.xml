@@ -19,9 +19,10 @@
         app:navGraph="@navigation/navigation" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/actionBar"
         android:layout_width="@dimen/bottom_bar_width"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/medium_margin"
+        android:layout_marginBottom="@dimen/medium_margin"
         android:background="@drawable/bottom_navigation_layout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

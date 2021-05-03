@@ -1,15 +1,21 @@
 <resources>
     <string name="app_name">twisdev</string>
 
+    <!--  Screen labels  -->
+    <string name="ShoppingCartFragment">Pesanan</string>
+
+    <!--  Placeholders  -->
+    <string name="total_harga">Total harga</string>
+
     <!--  Strings  -->
     <string name="category">Category</string>
     <string name="filter">Filter</string>
+    <string name="cart">Cart</string>
+    <string name="order">Order</string>
 
     <!--  Dummies  -->
     <string name="sample_title">Lampu idaman para warga</string>
     <string name="sample_price">Rp. 200.000</string>
     <string name="sample_location">Surabaya</string>
     <string name="sample_person">Twiscode</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
