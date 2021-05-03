@@ -10,4 +10,6 @@
     <string name="sample_price">Rp. 200.000</string>
     <string name="sample_location">Surabaya</string>
     <string name="sample_person">Twiscode</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
