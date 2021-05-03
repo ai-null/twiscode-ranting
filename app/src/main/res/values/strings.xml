@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">twisdev</string>
+
+    <!--  Strings  -->
+    <string name="category">Category</string>
+    <string name="filter">Filter</string>
+
+    <!--  Dummies  -->
+    <string name="sample_title">Lampu idaman para warga</string>
+    <string name="sample_price">Rp. 200.000</string>
+    <string name="sample_location">Surabaya</string>
+    <string name="sample_person">Twiscode</string>
+</resources>
