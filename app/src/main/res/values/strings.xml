@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">twisdev</string>
+    <string name="app_name">Twisdev</string>
 
     <!--  Screen labels  -->
     <string name="ShoppingCartFragment">Pesanan</string>

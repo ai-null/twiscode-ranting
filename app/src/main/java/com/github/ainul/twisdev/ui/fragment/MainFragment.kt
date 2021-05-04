@@ -24,21 +24,27 @@ class MainFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentMainBinding.inflate(layoutInflater, container, false)
 
+        // set option to begin work with menu & set transition to this screen
         setHasOptionsMenu(true)
-        setupRecyclerView()
+        setTransitionAnimation()
 
-        val defaultTransitionDuration =
-            resources.getInteger(R.integer.default_transition_duration).toLong()
+        return binding.root
+    }
 
+    private fun setTransitionAnimation() {
+        val transitionDuration = resources.getInteger(R.integer.default_transition_duration).toLong()
         exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, true).apply {
-            duration = defaultTransitionDuration
+            duration = transitionDuration
         }
 
         reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, false).apply {
-            duration = defaultTransitionDuration
+            duration = transitionDuration
         }
+    }
 
-        return binding.root
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupRecyclerView()
     }
 
     private fun setupRecyclerView() {
@@ -56,6 +62,12 @@ class MainFragment : Fragment() {
         listView.adapter = listItemAdapter
     }
 
+    private fun navigateToCart() {
+        this.findNavController().navigate(R.id.action_mainFragment_to_shoppingCartFragment)
+        viewmodel.hideActionBar()
+    }
+
+    /** Options menu creator & eventHandler **/
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.main_fragment_menu, menu)
@@ -63,16 +75,9 @@ class MainFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menuCart -> {
-                navigateToCart()
-            }
+            R.id.menuCart -> navigateToCart()
         }
 
         return super.onOptionsItemSelected(item)
-    }
-
-    private fun navigateToCart() {
-        this.findNavController().navigate(R.id.action_mainFragment_to_shoppingCartFragment)
-        viewmodel.hideActionBar()
     }
 }

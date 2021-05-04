@@ -2,7 +2,6 @@ package com.github.ainul.twisdev.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -25,6 +24,7 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
+        // setup navigationUI for navigation Handler
         NavigationUI.setupActionBarWithNavController(
             this,
             navController
@@ -39,6 +39,9 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+    /**
+     * hide actionBar by translating it to the bottom of screen.
+     */
     private fun hideActionBar(isHide: Boolean) {
         val valueY = if (isHide) 150f else 0f
         val actionBarView = findViewById<BottomNavigationView>(R.id.actionBar)
