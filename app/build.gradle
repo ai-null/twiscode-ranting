@@ -56,6 +56,7 @@ dependencies {
 
     // body parser for retrofit
     implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
 
     // lightweight image processing
     implementation 'com.github.bumptech.glide:glide:4.12.0'
