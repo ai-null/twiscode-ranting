@@ -18,4 +18,8 @@
     <string name="sample_price">Rp. 200.000</string>
     <string name="sample_location">Surabaya</string>
     <string name="sample_person">Twiscode</string>
+    <string name="subhead_shopping_cart">Produk yang akan anda pesan</string>
+    <string name="sample_status">(Baru)</string>
+    <string name="sample_weight">1.0kg</string>
+    <string name="sample_quantity">2</string>
 </resources>

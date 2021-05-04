@@ -4,25 +4,27 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.github.ainul.twisdev.databinding.ListItemLayoutBinding
+import com.github.ainul.twisdev.databinding.GridItemLayoutBinding
 
-class ListItemAdapter(private val context: Context) :
-    RecyclerView.Adapter<ListItemAdapter.ListItemViewHolder>() {
-    var data: List<Int> = arrayListOf()
+class GridItemAdapter(private val context: Context) :
+    RecyclerView.Adapter<GridItemAdapter.GridItemViewHolder>() {
+
+    var data: List<Int> = ArrayList()
         set(value) {
             notifyDataSetChanged()
             field = value
         }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListItemViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GridItemViewHolder {
         val inflater = LayoutInflater.from(context)
-        val view = ListItemLayoutBinding.inflate(inflater, parent, false)
+        val view = GridItemLayoutBinding.inflate(inflater)
 
-        return ListItemViewHolder(view)
+        return GridItemViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ListItemViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: GridItemViewHolder, position: Int) {
         val item = data[position]
+
         holder.bind(item)
     }
 
@@ -30,7 +32,7 @@ class ListItemAdapter(private val context: Context) :
         return data.size
     }
 
-    class ListItemViewHolder(private val binding: ListItemLayoutBinding) :
+    class GridItemViewHolder(private val binding: GridItemLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(data: Int) {

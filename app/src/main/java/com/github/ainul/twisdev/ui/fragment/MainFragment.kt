@@ -7,7 +7,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.github.ainul.twisdev.R
-import com.github.ainul.twisdev.adapter.ListItemAdapter
+import com.github.ainul.twisdev.adapter.GridItemAdapter
 import com.github.ainul.twisdev.databinding.FragmentMainBinding
 import com.github.ainul.twisdev.ui.viewmodel.MainViewModel
 import com.google.android.material.transition.MaterialSharedAxis
@@ -55,7 +55,7 @@ class MainFragment : Fragment() {
         }
 
         // setup adapter & assign to the view
-        val listItemAdapter = ListItemAdapter(requireContext())
+        val listItemAdapter = GridItemAdapter(requireContext())
         val listView: RecyclerView = binding.listView
 
         listItemAdapter.data = sampleData

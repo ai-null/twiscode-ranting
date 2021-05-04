@@ -7,11 +7,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.github.ainul.twisdev.R
+import com.github.ainul.twisdev.adapter.ListItemAdapter
+import com.github.ainul.twisdev.databinding.FragmentShoppingCartBinding
 import com.github.ainul.twisdev.ui.viewmodel.MainViewModel
 import com.google.android.material.transition.MaterialSharedAxis
 
 class ShoppingCartFragment : Fragment() {
 
+    private lateinit var binding: FragmentShoppingCartBinding
     private val viewmodel: MainViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -20,12 +23,15 @@ class ShoppingCartFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+        binding = FragmentShoppingCartBinding.inflate(inflater, container, false)
+
         setAnimationTransition()
-        return layoutInflater.inflate(R.layout.fragment_shopping_cart, container, false)
+        return binding.root
     }
 
     private fun setAnimationTransition() {
-        val transitionDuration = resources.getInteger(R.integer.default_transition_duration).toLong()
+        val transitionDuration =
+            resources.getInteger(R.integer.default_transition_duration).toLong()
         enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true).apply {
             duration = transitionDuration
         }
@@ -33,6 +39,14 @@ class ShoppingCartFragment : Fragment() {
         returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, false).apply {
             duration = transitionDuration
         }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val adapter = ListItemAdapter(requireContext())
+        adapter.data = arrayListOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+        binding.listView.adapter = adapter
     }
 
     override fun onDestroy() {
