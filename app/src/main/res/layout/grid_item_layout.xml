@@ -7,7 +7,7 @@
 
         <variable
             name="data"
-            type="Integer" />
+            type="com.github.ainul.twisdev.network.ItemModel" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -28,9 +28,8 @@
                 android:id="@+id/thumbnail"
                 android:layout_width="0dp"
                 android:layout_height="150dp"
-                android:background="@color/black"
+                android:background="#DFDFDF"
                 android:scaleType="centerCrop"
-                android:src="@drawable/halal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -40,7 +39,8 @@
                 android:id="@+id/title"
                 style="@style/itemTitle"
                 android:layout_margin="@dimen/medium_margin"
-                android:text="@string/sample_title"
+                tools:text="@string/sample_title"
+                android:text="@{data.title}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/thumbnail" />
@@ -51,7 +51,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/margin"
                 android:singleLine="true"
-                android:text="@string/sample_price"
+                android:text="@{data.price}"
                 android:textColor="#F9A825"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@id/title"
@@ -61,7 +61,7 @@
             <TextView
                 android:id="@+id/location"
                 style="@style/cardInfoSection"
-                android:text="@string/sample_location"
+                android:text="@{data.locationName}"
                 app:drawableLeftCompat="@drawable/ic_baseline_location_on_24"
                 app:layout_constraintEnd_toStartOf="@id/halalStamp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -71,7 +71,7 @@
                 android:id="@+id/merchant"
                 style="@style/cardInfoSection"
                 android:layout_marginTop="@dimen/margin"
-                android:text="@string/sample_person"
+                android:text="@{data.user.userName}"
                 app:drawableLeftCompat="@drawable/ic_baseline_person_24"
                 app:layout_constraintEnd_toStartOf="@id/halalStamp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -93,6 +93,7 @@
                 android:layout_width="50dp"
                 android:layout_height="0dp"
                 android:src="@drawable/halal"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toTopOf="@id/button"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/price"

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.github.ainul.twisdev.R
@@ -14,8 +15,10 @@ import com.google.android.material.transition.MaterialSharedAxis
 
 class MainFragment : Fragment() {
 
+    // Viewmodel, dataBinding, viewComponents, reference, etc...
     private val viewmodel: MainViewModel by activityViewModels()
     private lateinit var binding: FragmentMainBinding
+    private lateinit var gridItemAdapter: GridItemAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,6 +30,11 @@ class MainFragment : Fragment() {
         // set option to begin work with menu & set transition to this screen
         setHasOptionsMenu(true)
         setTransitionAnimation()
+
+        setupRecyclerView()
+
+        // liveData watcher
+        updateLiveData()
 
         return binding.root
     }
@@ -42,24 +50,19 @@ class MainFragment : Fragment() {
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setupRecyclerView()
+    private fun updateLiveData() {
+        viewmodel.fetchedListItemData.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                gridItemAdapter.data = it
+            }
+        })
     }
 
+    /** Setup GridItemRecyclerView */
     private fun setupRecyclerView() {
-        // setup sample data
-        val sampleData = ArrayList<Int>()
-        for (i in 0..10) {
-            sampleData.add(i)
-        }
-
         // setup adapter & assign to the view
-        val listItemAdapter = GridItemAdapter(requireContext())
-        val listView: RecyclerView = binding.listView
-
-        listItemAdapter.data = sampleData
-        listView.adapter = listItemAdapter
+        gridItemAdapter = GridItemAdapter(requireContext())
+        binding.listView.adapter = gridItemAdapter
     }
 
     private fun navigateToCart() {
