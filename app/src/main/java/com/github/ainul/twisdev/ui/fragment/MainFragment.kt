@@ -4,16 +4,16 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.RecyclerView
 import com.github.ainul.twisdev.R
 import com.github.ainul.twisdev.adapter.GridItemAdapter
+import com.github.ainul.twisdev.adapter.listener.GridItemListener
 import com.github.ainul.twisdev.databinding.FragmentMainBinding
+import com.github.ainul.twisdev.network.ItemModel
 import com.github.ainul.twisdev.ui.viewmodel.MainViewModel
 import com.google.android.material.transition.MaterialSharedAxis
 
-class MainFragment : Fragment() {
+class MainFragment : Fragment(), GridItemListener {
 
     // Viewmodel, dataBinding, viewComponents, reference, etc...
     private val viewmodel: MainViewModel by activityViewModels()
@@ -51,23 +51,27 @@ class MainFragment : Fragment() {
     }
 
     private fun updateLiveData() {
-        viewmodel.fetchedListItemData.observe(viewLifecycleOwner, Observer {
+        viewmodel.fetchedListItemData.observe(viewLifecycleOwner, {
             it?.let {
                 gridItemAdapter.data = it
             }
         })
     }
 
-    /** Setup GridItemRecyclerView */
-    private fun setupRecyclerView() {
-        // setup adapter & assign to the view
-        gridItemAdapter = GridItemAdapter(requireContext())
-        binding.listView.adapter = gridItemAdapter
-    }
-
     private fun navigateToCart() {
         this.findNavController().navigate(R.id.action_mainFragment_to_shoppingCartFragment)
         viewmodel.hideActionBar()
+    }
+
+    /** Setup GridItemRecyclerView */
+    override fun addItemToCart(e: ItemModel) {
+        viewmodel.addItemToCart(e)
+    }
+
+    private fun setupRecyclerView() {
+        // setup adapter & assign to the view
+        gridItemAdapter = GridItemAdapter(requireContext(), this)
+        binding.listView.adapter = gridItemAdapter
     }
 
     /** Options menu creator & eventHandler **/

@@ -5,7 +5,9 @@
 
         <variable
             name="data"
-            type="Integer" />
+            type="com.github.ainul.twisdev.network.ItemModel" />
+
+        <import type="com.github.ainul.twisdev.util.Util" />
     </data>
 
     <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -31,8 +33,8 @@
                 android:id="@+id/thumbnail"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
+                android:background="#DFDFDF"
                 android:scaleType="centerCrop"
-                android:src="@drawable/sample"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.ThumbnailCorner" />
@@ -40,7 +42,7 @@
             <TextView
                 android:id="@+id/title"
                 style="@style/itemTitle"
-                android:text="@string/sample_title"
+                android:text="@{data.title}"
                 app:layout_constraintEnd_toStartOf="@id/quantityContainer"
                 app:layout_constraintStart_toEndOf="@id/thumbnail"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -50,7 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/small_margin"
-                android:text="@string/sample_price"
+                android:text="@{Util.currencyFormatter(data.price, false)}"
                 android:textColor="#F9A825"
                 app:layout_constraintStart_toStartOf="@id/title"
                 app:layout_constraintTop_toBottomOf="@id/title" />
@@ -59,7 +61,7 @@
                 android:id="@+id/status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/sample_status"
+                android:text="@{data.itemCondition.name}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@id/title"
                 app:layout_constraintTop_toBottomOf="@id/price"
@@ -104,7 +106,7 @@
                 android:id="@+id/weight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/sample_weight"
+                android:text="@{Util.weightFormatter(data.weight)}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.85"

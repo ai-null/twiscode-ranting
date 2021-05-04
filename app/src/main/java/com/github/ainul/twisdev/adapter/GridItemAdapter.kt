@@ -6,10 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.github.ainul.twisdev.adapter.listener.GridItemListener
 import com.github.ainul.twisdev.databinding.GridItemLayoutBinding
 import com.github.ainul.twisdev.network.ItemModel
 
-class GridItemAdapter(private val context: Context) :
+class GridItemAdapter(private val context: Context, private val listener: GridItemListener) :
     RecyclerView.Adapter<GridItemAdapter.GridItemViewHolder>() {
 
     var data: List<ItemModel> = ArrayList()
@@ -22,7 +23,7 @@ class GridItemAdapter(private val context: Context) :
         val inflater = LayoutInflater.from(context)
         val view = GridItemLayoutBinding.inflate(inflater)
 
-        return GridItemViewHolder(view)
+        return GridItemViewHolder(view, listener)
     }
 
     override fun onBindViewHolder(holder: GridItemViewHolder, position: Int) {
@@ -31,7 +32,10 @@ class GridItemAdapter(private val context: Context) :
 
     override fun getItemCount() = data.size
 
-    class GridItemViewHolder(private val binding: GridItemLayoutBinding) :
+    class GridItemViewHolder(
+        private val binding: GridItemLayoutBinding,
+        private val listener: GridItemListener
+    ) :
         RecyclerView.ViewHolder(binding.root) {
 
         /**
@@ -51,6 +55,10 @@ class GridItemAdapter(private val context: Context) :
             // halalStamp product filter
             binding.halalStamp.run {
                 visibility = if (data.isHalal == "1") View.VISIBLE else View.INVISIBLE
+            }
+            // add item to cart
+            binding.button.setOnClickListener {
+                listener.addItemToCart(data)
             }
         }
     }

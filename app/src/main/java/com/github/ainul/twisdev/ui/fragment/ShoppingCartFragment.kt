@@ -14,18 +14,21 @@ import com.google.android.material.transition.MaterialSharedAxis
 
 class ShoppingCartFragment : Fragment() {
 
+    // Viewmodel, dataBinding, viewComponents, reference, etc...
     private lateinit var binding: FragmentShoppingCartBinding
     private val viewmodel: MainViewModel by activityViewModels()
+    private lateinit var adapter: ListItemAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         binding = FragmentShoppingCartBinding.inflate(inflater, container, false)
 
         setAnimationTransition()
+        updateLiveData()
         return binding.root
     }
 
@@ -41,11 +44,17 @@ class ShoppingCartFragment : Fragment() {
         }
     }
 
+    private fun updateLiveData() {
+        viewmodel.itemsOnCart.observe(viewLifecycleOwner, {
+            adapter.data = it
+        })
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = ListItemAdapter(requireContext())
-        adapter.data = arrayListOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+        adapter = ListItemAdapter(requireContext())
+        adapter.data = viewmodel.listOfItems
         binding.listView.adapter = adapter
     }
 

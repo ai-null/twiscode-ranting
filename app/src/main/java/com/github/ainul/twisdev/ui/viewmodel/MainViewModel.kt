@@ -36,4 +36,15 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     fun hideActionBar() {
         _actionBarHidden.value = _actionBarHidden.value != true
     }
+
+    private val _itemsOnCart = MutableLiveData<List<ItemModel>>()
+    val itemsOnCart: LiveData<List<ItemModel>> get() = _itemsOnCart
+    var listOfItems = arrayListOf<ItemModel>()
+        private set(value) {
+            _itemsOnCart.value = value
+            field = value
+        }
+
+    fun addItemToCart(e: ItemModel) { listOfItems.add(e) }
+    fun removeItemFromCart(e: ItemModel) { listOfItems.remove(e) }
 }

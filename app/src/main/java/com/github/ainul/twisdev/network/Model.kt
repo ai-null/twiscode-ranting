@@ -25,7 +25,7 @@ data class ItemModel(
     val defaultPhoto: DefaultPhoto,
     @SerializedName("condition_of_item_id")
     val conditionOfItemId: String,
-    @SerializedName("condition_if_item")
+    @SerializedName("condition_of_item")
     val itemCondition: ItemCondition,
     val user: User,
 )

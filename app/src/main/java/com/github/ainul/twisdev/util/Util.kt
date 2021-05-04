@@ -17,4 +17,9 @@ object Util {
 
         return if (raw) formatted else "Rp. $formatted"
     }
+
+    @JvmStatic
+    fun weightFormatter(e: String): String {
+        return "$e Kg"
+    }
 }
