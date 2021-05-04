@@ -8,6 +8,8 @@
         <variable
             name="data"
             type="com.github.ainul.twisdev.network.ItemModel" />
+
+        <import type="com.github.ainul.twisdev.util.Util" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -52,7 +54,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/margin"
                 android:singleLine="true"
-                android:text="@{data.price}"
+                android:text="@{Util.currencyFormatter(data.price, false)}"
                 android:textColor="@color/yellow"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@id/title"
@@ -63,7 +65,7 @@
                 android:id="@+id/location"
                 style="@style/cardInfoSection"
                 android:layout_marginTop="@dimen/margin"
-                android:text="@{data.locationName}"
+                android:text="@{data.address}"
                 app:drawableLeftCompat="@drawable/ic_baseline_location_on_24"
                 app:layout_constraintEnd_toStartOf="@id/halalStamp"
                 app:layout_constraintStart_toStartOf="parent"
