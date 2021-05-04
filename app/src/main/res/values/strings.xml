@@ -22,4 +22,5 @@
     <string name="sample_status">(Baru)</string>
     <string name="sample_weight">1.0kg</string>
     <string name="sample_quantity">2</string>
+    <string name="add_to_cart">Add to cart</string>
 </resources>

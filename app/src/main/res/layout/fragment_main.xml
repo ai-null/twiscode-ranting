@@ -14,6 +14,7 @@
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:padding="@dimen/small_margin"
+            android:theme="@style/ThemeOverlay.poppinsFont"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

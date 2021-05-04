@@ -15,6 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/small_margin"
         android:background="#fff"
+        android:theme="@style/ThemeOverlay.poppinsFont"
         app:cardCornerRadius="@dimen/radius"
         app:cardElevation="3dp"
         app:cardUseCompatPadding="true">
@@ -39,11 +40,11 @@
                 android:id="@+id/title"
                 style="@style/itemTitle"
                 android:layout_margin="@dimen/medium_margin"
-                tools:text="@string/sample_title"
                 android:text="@{data.title}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/thumbnail" />
+                app:layout_constraintTop_toBottomOf="@id/thumbnail"
+                tools:text="@string/sample_title" />
 
             <TextView
                 android:id="@+id/price"
@@ -52,7 +53,7 @@
                 android:layout_marginTop="@dimen/margin"
                 android:singleLine="true"
                 android:text="@{data.price}"
-                android:textColor="#F9A825"
+                android:textColor="@color/yellow"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@id/title"
                 app:layout_constraintStart_toStartOf="@id/title"
@@ -61,6 +62,7 @@
             <TextView
                 android:id="@+id/location"
                 style="@style/cardInfoSection"
+                android:layout_marginTop="@dimen/margin"
                 android:text="@{data.locationName}"
                 app:drawableLeftCompat="@drawable/ic_baseline_location_on_24"
                 app:layout_constraintEnd_toStartOf="@id/halalStamp"
@@ -77,14 +79,19 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/location" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/button"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/medium_margin"
                 android:layout_marginTop="@dimen/medium_margin"
-                android:text="Add to cart"
-                app:backgroundTint="#1565C0"
+                android:text="@string/add_to_cart"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+                app:backgroundTint="@color/blue_light"
+                app:elevation="0dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/merchant" />
 
