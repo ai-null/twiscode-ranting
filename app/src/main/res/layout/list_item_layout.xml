@@ -5,7 +5,7 @@
 
         <variable
             name="data"
-            type="com.github.ainul.twisdev.network.ItemModel" />
+            type="com.github.ainul.twisdev.ui.viewmodel.MainViewModel.Companion.CartItems" />
 
         <import type="com.github.ainul.twisdev.util.Util" />
     </data>
@@ -42,7 +42,7 @@
             <TextView
                 android:id="@+id/title"
                 style="@style/itemTitle"
-                android:text="@{data.title}"
+                android:text="@{data.itemModel.title}"
                 app:layout_constraintEnd_toStartOf="@id/quantityContainer"
                 app:layout_constraintStart_toEndOf="@id/thumbnail"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -52,7 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/small_margin"
-                android:text="@{Util.currencyFormatter(data.price, false)}"
+                android:text="@{Util.currencyFormatter(data.itemModel.price, false)}"
                 android:textColor="#F9A825"
                 app:layout_constraintStart_toStartOf="@id/title"
                 app:layout_constraintTop_toBottomOf="@id/title" />
@@ -61,7 +61,7 @@
                 android:id="@+id/status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{data.itemCondition.name}"
+                android:text="@{data.itemModel.itemCondition.name}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@id/title"
                 app:layout_constraintTop_toBottomOf="@id/price"
@@ -78,6 +78,7 @@
                 app:layout_constraintTop_toBottomOf="@id/title">
 
                 <ImageView
+                    android:id="@+id/decrease"
                     style="@style/quantityActionButton"
                     android:backgroundTint="@color/red"
                     app:contentPadding="@dimen/small_margin"
@@ -86,14 +87,16 @@
                     tools:ignore="contentDescription" />
 
                 <TextView
+                    android:id="@+id/quantity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(data.quantity)}"
                     android:layout_marginStart="@dimen/medium_margin"
                     android:layout_marginEnd="@dimen/medium_margin"
-                    android:text="@string/sample_quantity"
                     android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
                 <ImageView
+                    android:id="@+id/increase"
                     style="@style/quantityActionButton"
                     android:backgroundTint="@color/blue_light"
                     app:contentPadding="@dimen/small_margin"
@@ -106,7 +109,7 @@
                 android:id="@+id/weight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{Util.weightFormatter(data.weight)}"
+                android:text="@{Util.weightFormatter(data.itemModel.weight)}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.85"

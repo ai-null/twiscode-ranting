@@ -37,14 +37,58 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
         _actionBarHidden.value = _actionBarHidden.value != true
     }
 
-    private val _itemsOnCart = MutableLiveData<List<ItemModel>>()
-    val itemsOnCart: LiveData<List<ItemModel>> get() = _itemsOnCart
-    var listOfItems = arrayListOf<ItemModel>()
-        private set(value) {
-            _itemsOnCart.value = value
-            field = value
+    /**
+     * items liveData holder,
+     * it takes from [listOfItems] every time it update it'll also update value of [_itemsOnCart].
+     * since there's no database in this project this is the least I can do
+     */
+    private val _itemsOnCart = MutableLiveData<List<CartItems>>()
+    val itemsOnCart: LiveData<List<CartItems>> get() = _itemsOnCart
+    var listOfItems = arrayListOf<CartItems>()
+        private set
+
+    fun addItemToCart(item: ItemModel) {
+        if (!isItemAlreadyAdded(item)) {
+            listOfItems.add(CartItems(item))
+        }
+    }
+
+    fun updateItem(data: CartItems, position: Int) {
+//        listOfItems.forEachIndexed { index, cartItems ->
+//            if (cartItems.itemModel.id == data.itemModel.id) {
+//                if (data.quantity <= 0) listOfItems.removeAt(index)
+//                else listOfItems[index] = data
+//            }
+//        }
+
+        if (data.quantity <= 0) listOfItems.removeAt(position)
+        else listOfItems[position] = data
+
+        _itemsOnCart.value = listOfItems
+    }
+
+    /**
+     * Check whether item is already added on the cart or not.
+     * returns true if yes
+     */
+    private fun isItemAlreadyAdded(item: ItemModel): Boolean {
+        var added = false
+        listOfItems.forEach {
+            if (it.itemModel == item) added = true
         }
 
-    fun addItemToCart(e: ItemModel) { listOfItems.add(e) }
-    fun removeItemFromCart(e: ItemModel) { listOfItems.remove(e) }
+        return added
+    }
+
+    companion object {
+        data class CartItems(val itemModel: ItemModel, var quantity: Int = 1) {
+            fun inc() {
+                quantity += 1
+            }
+
+            fun dec() {
+                quantity -= 1
+            }
+        }
+    }
 }

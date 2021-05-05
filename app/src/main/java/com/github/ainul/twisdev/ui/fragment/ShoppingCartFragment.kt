@@ -8,11 +8,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.github.ainul.twisdev.R
 import com.github.ainul.twisdev.adapter.ListItemAdapter
+import com.github.ainul.twisdev.adapter.listener.ListItemListener
 import com.github.ainul.twisdev.databinding.FragmentShoppingCartBinding
 import com.github.ainul.twisdev.ui.viewmodel.MainViewModel
+import com.github.ainul.twisdev.ui.viewmodel.MainViewModel.Companion.CartItems
 import com.google.android.material.transition.MaterialSharedAxis
 
-class ShoppingCartFragment : Fragment() {
+class ShoppingCartFragment : Fragment(), ListItemListener {
 
     // Viewmodel, dataBinding, viewComponents, reference, etc...
     private lateinit var binding: FragmentShoppingCartBinding
@@ -26,6 +28,7 @@ class ShoppingCartFragment : Fragment() {
     ): View {
 
         binding = FragmentShoppingCartBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
 
         setAnimationTransition()
         updateLiveData()
@@ -46,21 +49,30 @@ class ShoppingCartFragment : Fragment() {
 
     private fun updateLiveData() {
         viewmodel.itemsOnCart.observe(viewLifecycleOwner, {
-            adapter.data = it
+            adapter.submitList(it.toList())
         })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = ListItemAdapter(requireContext())
-        adapter.data = viewmodel.listOfItems
+        adapter = ListItemAdapter(requireContext(), this)
+        adapter.submitList(viewmodel.listOfItems)
         binding.listView.adapter = adapter
     }
 
+    /**
+     * called on navigateUp to showActionBar again
+     */
     override fun onDestroy() {
         // show actionBar after leaving the fragment
         viewmodel.hideActionBar()
         super.onDestroy()
+    }
+
+    override fun onListItemAction(data: CartItems, isIncrease: Boolean, position: Int) {
+        if (isIncrease) data.inc() else data.dec()
+        val newItem = CartItems(data.itemModel, data.quantity)
+        viewmodel.updateItem(newItem, position)
     }
 }

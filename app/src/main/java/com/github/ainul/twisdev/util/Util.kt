@@ -20,6 +20,6 @@ object Util {
 
     @JvmStatic
     fun weightFormatter(e: String): String {
-        return "$e Kg"
+        return if (e.isBlank()) "0 kg" else "$e kg"
     }
 }
