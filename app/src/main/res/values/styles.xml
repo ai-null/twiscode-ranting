@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="cardInfoSection">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/medium_margin</item>
+        <item name="android:drawablePadding">@dimen/margin</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.ThumbnailCorner">
+        <item name="cornerSize">16dp</item>
+    </style>
+
+    <style name="itemTitle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginStart">@dimen/medium_margin</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/teal</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="quantityActionButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/quantity_action_layout</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:padding">@dimen/small_margin</item>
+    </style>
+</resources>

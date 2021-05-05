@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Twisdev</string>
+
+    <!--  Screen labels  -->
+    <string name="ShoppingCartFragment">Pesanan</string>
+
+    <!--  Placeholders  -->
+    <string name="total_harga">Total harga</string>
+    <string name="subhead_shopping_cart">Produk yang akan anda pesan</string>
+    <string name="add_to_cart">Add to cart</string>
+
+    <!--  Strings  -->
+    <string name="category">Category</string>
+    <string name="filter">Filter</string>
+    <string name="cart">Cart</string>
+    <string name="order">Order</string>
+
+    <!--  Dummies  -->
+    <string name="sample_title">Lampu idaman para warga</string>
+    <string name="sample_price">Rp. 200.000</string>
+    <string name="sample_location">Surabaya</string>
+    <string name="sample_person">Twiscode</string>
+    <string name="sample_status">(Baru)</string>
+    <string name="sample_weight">1.0kg</string>
+    <string name="sample_quantity">1</string>
+</resources>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="data"
+            type="com.github.ainul.twisdev.network.ItemModel" />
+
+        <import type="com.github.ainul.twisdev.util.Util" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/small_margin"
+        android:background="#fff"
+        android:theme="@style/ThemeOverlay.poppinsFont"
+        app:cardCornerRadius="@dimen/radius"
+        app:cardElevation="3dp"
+        app:cardUseCompatPadding="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/medium_margin">
+
+            <ImageView
+                android:id="@+id/thumbnail"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:background="#DFDFDF"
+                android:scaleType="centerCrop"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="contentDescription" />
+
+            <TextView
+                android:id="@+id/title"
+                style="@style/itemTitle"
+                android:layout_margin="@dimen/medium_margin"
+                android:text="@{data.title}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/thumbnail"
+                tools:text="@string/sample_title" />
+
+            <TextView
+                android:id="@+id/price"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/margin"
+                android:singleLine="true"
+                android:text="@{Util.currencyFormatter(data.price, false)}"
+                android:textColor="@color/yellow"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/title"
+                app:layout_constraintStart_toStartOf="@id/title"
+                app:layout_constraintTop_toBottomOf="@id/title" />
+
+            <TextView
+                android:id="@+id/location"
+                style="@style/cardInfoSection"
+                android:layout_marginTop="@dimen/margin"
+                android:text="@{data.address}"
+                app:drawableLeftCompat="@drawable/ic_baseline_location_on_24"
+                app:layout_constraintEnd_toStartOf="@id/halalStamp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/price" />
+
+            <TextView
+                android:id="@+id/merchant"
+                style="@style/cardInfoSection"
+                android:layout_marginTop="@dimen/margin"
+                android:text="@{data.user.userName}"
+                app:drawableLeftCompat="@drawable/ic_baseline_person_24"
+                app:layout_constraintEnd_toStartOf="@id/halalStamp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/location" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/medium_margin"
+                android:layout_marginTop="@dimen/medium_margin"
+                android:text="@string/add_to_cart"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+                app:backgroundTint="@color/blue_light"
+                app:elevation="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/merchant" />
+
+            <ImageView
+                android:id="@+id/halalStamp"
+                android:layout_width="50dp"
+                android:layout_height="0dp"
+                android:src="@drawable/halal"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toTopOf="@id/button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/price"
+                tools:ignore="contentDescription" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>
