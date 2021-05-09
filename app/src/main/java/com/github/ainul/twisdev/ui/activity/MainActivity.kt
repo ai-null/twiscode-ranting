@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         val valueY = if (isHide) 150f else 0f
         val actionBarView = findViewById<BottomNavigationView>(R.id.actionBar)
         with(actionBarView.animate()) {
-            duration = 200
+            duration = 300
             translationY(valueY)
             start()
         }

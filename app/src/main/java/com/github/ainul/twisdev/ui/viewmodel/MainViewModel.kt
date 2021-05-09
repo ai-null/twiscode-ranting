@@ -1,15 +1,20 @@
 package com.github.ainul.twisdev.ui.viewmodel
 
 import android.app.Application
+import android.util.Log
+import androidx.databinding.ObservableInt
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import com.github.ainul.twisdev.network.ItemModel
 import com.github.ainul.twisdev.repository.RantingRepository
+import com.github.ainul.twisdev.util.Util
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.lang.Exception
 
 class MainViewModel(app: Application) : AndroidViewModel(app) {
 
@@ -18,13 +23,24 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     private val repository = RantingRepository()
 
     // listItemData holder, used on initialization
-    private val _fetchedListItemData = MutableLiveData<List<ItemModel>>()
-    val fetchedListItemData: LiveData<List<ItemModel>> get() = _fetchedListItemData
+    private val _fetchedListItemData = MutableLiveData<ViewState>()
+    val fetchedListItemData: LiveData<ViewState> get() = _fetchedListItemData
+
+    fun refresh() {
+        _fetchedListItemData.value = ViewState.Loading
+        uiScope.launch {
+            try {
+                repository.fetchDataFromNetwork().also {
+                    _fetchedListItemData.value = ViewState.Succeed(it)
+                }
+            } catch (e: Exception) {
+                _fetchedListItemData.value = ViewState.Failure(e.message)
+            }
+        }
+    }
 
     init {
-        uiScope.launch {
-            _fetchedListItemData.value = repository.fetchDataFromNetwork()
-        }
+        refresh()
     }
 
     /**
@@ -33,8 +49,8 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
      */
     private val _actionBarHidden = MutableLiveData<Boolean>()
     val actionBarHidden: LiveData<Boolean> get() = _actionBarHidden
-    fun hideActionBar() {
-        _actionBarHidden.value = _actionBarHidden.value != true
+    fun hideActionBar(action: Boolean = true) {
+        _actionBarHidden.value = action
     }
 
     /**
@@ -53,18 +69,36 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
         }
     }
 
-    fun updateItem(data: CartItems, position: Int) {
-//        listOfItems.forEachIndexed { index, cartItems ->
-//            if (cartItems.itemModel.id == data.itemModel.id) {
-//                if (data.quantity <= 0) listOfItems.removeAt(index)
-//                else listOfItems[index] = data
-//            }
-//        }
+    /**
+     * when quantity of item changes it call [updateData]
+     *
+     *
+     * total price data holder,
+     * for the public variable it transform Int to a currencyFormatted string
+     * then show it to the UI.
+     */
+    private val _totalPrice = MutableLiveData<Int>()
+    val totalPrice: LiveData<String>
+        get() = Transformations.map(_totalPrice) {
+            Util.currencyFormatter(it.toString())
+        }
 
-        if (data.quantity <= 0) listOfItems.removeAt(position)
-        else listOfItems[position] = data
+    fun updateData(data: CartItems) {
+        val iterator = listOfItems.iterator()
 
-        _itemsOnCart.value = listOfItems
+        if (data.quantity.get() <= 0) {
+            while (iterator.hasNext()) {
+                val item = iterator.next()
+                if (item.itemModel.id == data.itemModel.id) {
+                    iterator.remove()
+                    _itemsOnCart.value = listOfItems
+                }
+            }
+        }
+    }
+
+    private fun updateTotalPrice(e: Int) {
+        _totalPrice.value = e
     }
 
     /**
@@ -80,15 +114,30 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
         return added
     }
 
+    /**
+     * Item cart data holder,
+     * update quantity to ObservableInteger so it can tell the UI on change
+     */
     companion object {
-        data class CartItems(val itemModel: ItemModel, var quantity: Int = 1) {
+        data class CartItems(
+            val itemModel: ItemModel,
+            val quantity: ObservableInt = ObservableInt(1)
+        ) {
             fun inc() {
-                quantity += 1
+                quantity.set(quantity.get().plus(1))
+                quantity.notifyChange()
             }
 
             fun dec() {
-                quantity -= 1
+                quantity.set(quantity.get().minus(1))
+                quantity.notifyChange()
             }
         }
     }
+}
+
+sealed class ViewState() {
+    object Loading : ViewState()
+    data class Succeed(val data: List<ItemModel>) : ViewState()
+    data class Failure(val message: String?) : ViewState()
 }

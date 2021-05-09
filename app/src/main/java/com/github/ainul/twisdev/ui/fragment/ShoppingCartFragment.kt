@@ -66,13 +66,11 @@ class ShoppingCartFragment : Fragment(), ListItemListener {
      */
     override fun onDestroy() {
         // show actionBar after leaving the fragment
-        viewmodel.hideActionBar()
+        viewmodel.hideActionBar(false)
         super.onDestroy()
     }
 
-    override fun onListItemAction(data: CartItems, isIncrease: Boolean, position: Int) {
-        if (isIncrease) data.inc() else data.dec()
-        val newItem = CartItems(data.itemModel, data.quantity)
-        viewmodel.updateItem(newItem, position)
+    override fun onListItemAction(data: CartItems) {
+        viewmodel.updateData(data)
     }
 }
