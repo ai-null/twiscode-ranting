@@ -11,13 +11,14 @@ import com.github.ainul.twisdev.adapter.ListItemAdapter
 import com.github.ainul.twisdev.adapter.listener.ListItemListener
 import com.github.ainul.twisdev.databinding.FragmentShoppingCartBinding
 import com.github.ainul.twisdev.ui.viewmodel.MainViewModel
-import com.github.ainul.twisdev.ui.viewmodel.MainViewModel.Companion.CartItems
 import com.google.android.material.transition.MaterialSharedAxis
 
 class ShoppingCartFragment : Fragment(), ListItemListener {
 
     // Viewmodel, dataBinding, viewComponents, reference, etc...
-    private lateinit var binding: FragmentShoppingCartBinding
+    private var _binding: FragmentShoppingCartBinding? = null
+    private val binding get() = _binding!!
+
     private val viewmodel: MainViewModel by activityViewModels()
     private lateinit var adapter: ListItemAdapter
 
@@ -26,12 +27,12 @@ class ShoppingCartFragment : Fragment(), ListItemListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        _binding = FragmentShoppingCartBinding.inflate(inflater, container, false)
+        binding.viewmodel = viewmodel
 
-        binding = FragmentShoppingCartBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = viewLifecycleOwner
+        binding.lifecycleOwner = this
 
         setAnimationTransition()
-        updateLiveData()
         return binding.root
     }
 
@@ -47,18 +48,20 @@ class ShoppingCartFragment : Fragment(), ListItemListener {
         }
     }
 
-    private fun updateLiveData() {
-        viewmodel.itemsOnCart.observe(viewLifecycleOwner, {
-            adapter.submitList(it.toList())
-        })
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         adapter = ListItemAdapter(requireContext(), this)
         adapter.submitList(viewmodel.listOfItems)
         binding.listView.adapter = adapter
+
+        updateLiveData()
+    }
+
+    private fun updateLiveData() {
+        viewmodel.itemsOnCart.observe(viewLifecycleOwner, {
+            adapter.submitList(it)
+        })
     }
 
     /**
@@ -67,10 +70,12 @@ class ShoppingCartFragment : Fragment(), ListItemListener {
     override fun onDestroy() {
         // show actionBar after leaving the fragment
         viewmodel.hideActionBar(false)
+        _binding = null
         super.onDestroy()
     }
 
-    override fun onListItemAction(data: CartItems) {
-        viewmodel.updateData(data)
+    override fun onListItemAction(data: MainViewModel.Companion.CartItems, increase: Boolean) {
+        super.onListItemAction(data, increase)
+        viewmodel.updateData(data, increase)
     }
 }

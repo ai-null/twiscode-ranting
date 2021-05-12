@@ -1,7 +1,5 @@
 package com.github.ainul.twisdev.network
 
-import androidx.lifecycle.LiveData
-import okhttp3.Call
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -14,6 +12,7 @@ const val GET_DATA = "items/search/api_key/teampsisthebest/"
 private val okHttpClient = OkHttpClient().newBuilder()
     .connectTimeout(8, TimeUnit.SECONDS)
     .readTimeout(8, TimeUnit.SECONDS)
+    .writeTimeout(15, TimeUnit.SECONDS)
     .build()
 
 private val retrofit = Retrofit.Builder()

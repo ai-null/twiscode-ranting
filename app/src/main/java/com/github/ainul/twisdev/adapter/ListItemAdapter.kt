@@ -56,14 +56,12 @@ class ListItemAdapter(
 
             // increase item quantity
             binding.increase.setOnClickListener {
-                data.inc()
-                listItemListener.onListItemAction(data)
+                listItemListener.onListItemAction(data, true)
             }
 
             // decrease item quantity
             binding.decrease.setOnClickListener {
-                data.dec()
-                listItemListener.onListItemAction(data)
+                listItemListener.onListItemAction(data, false)
             }
         }
     }

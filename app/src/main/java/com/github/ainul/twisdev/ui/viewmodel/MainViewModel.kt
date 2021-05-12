@@ -1,34 +1,29 @@
 package com.github.ainul.twisdev.ui.viewmodel
 
 import android.app.Application
-import android.util.Log
 import androidx.databinding.ObservableInt
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
+import androidx.lifecycle.*
 import com.github.ainul.twisdev.network.ItemModel
 import com.github.ainul.twisdev.repository.RantingRepository
 import com.github.ainul.twisdev.util.Util
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
 class MainViewModel(app: Application) : AndroidViewModel(app) {
 
-    // setup UI thread scope to run suspend fun & repository controller
-    private val uiScope = CoroutineScope(Job() + Dispatchers.Main)
     private val repository = RantingRepository()
 
     // listItemData holder, used on initialization
     private val _fetchedListItemData = MutableLiveData<ViewState>()
     val fetchedListItemData: LiveData<ViewState> get() = _fetchedListItemData
 
+    init {
+        refresh()
+    }
+
     fun refresh() {
         _fetchedListItemData.value = ViewState.Loading
-        uiScope.launch {
+        viewModelScope.launch {
             try {
                 repository.fetchDataFromNetwork().also {
                     _fetchedListItemData.value = ViewState.Succeed(it)
@@ -37,10 +32,6 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
                 _fetchedListItemData.value = ViewState.Failure(e.message)
             }
         }
-    }
-
-    init {
-        refresh()
     }
 
     /**
@@ -66,6 +57,7 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     fun addItemToCart(item: ItemModel) {
         if (!isItemAlreadyAdded(item)) {
             listOfItems.add(CartItems(item))
+            updatePrice(item.price.toInt())
         }
     }
 
@@ -77,28 +69,38 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
      * for the public variable it transform Int to a currencyFormatted string
      * then show it to the UI.
      */
-    private val _totalPrice = MutableLiveData<Int>()
+    private val _totalPrice = MutableLiveData<Int>(0)
     val totalPrice: LiveData<String>
         get() = Transformations.map(_totalPrice) {
             Util.currencyFormatter(it.toString())
         }
 
-    fun updateData(data: CartItems) {
+    fun updateData(data: CartItems, increase: Boolean) {
         val iterator = listOfItems.iterator()
 
-        if (data.quantity.get() <= 0) {
-            while (iterator.hasNext()) {
-                val item = iterator.next()
-                if (item.itemModel.id == data.itemModel.id) {
-                    iterator.remove()
-                    _itemsOnCart.value = listOfItems
-                }
+        updatePrice(data.itemModel.price.toInt(), increase)
+        while (iterator.hasNext()) {
+            val item = iterator.next()
+            if (item.itemModel.id == data.itemModel.id && data.quantity.get() <= 0) {
+                iterator.remove()
             }
         }
     }
 
-    private fun updateTotalPrice(e: Int) {
-        _totalPrice.value = e
+    /**
+     * update total price
+     * it takes [increase] as conditional parameter to choose
+     * the data will increased or decreased
+     */
+    private fun updatePrice(price: Int, increase: Boolean = true) {
+        if (price.toString().isNotBlank()) {
+            val payload = _totalPrice.value!!.run {
+                if (increase) plus(price)
+                else minus(price)
+            }
+
+            _totalPrice.value = payload
+        }
     }
 
     /**
@@ -136,7 +138,7 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     }
 }
 
-sealed class ViewState() {
+sealed class ViewState {
     object Loading : ViewState()
     data class Succeed(val data: List<ItemModel>) : ViewState()
     data class Failure(val message: String?) : ViewState()
