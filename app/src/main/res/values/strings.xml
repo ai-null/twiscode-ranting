@@ -23,4 +23,7 @@
     <string name="sample_status">(Baru)</string>
     <string name="sample_weight">1.0kg</string>
     <string name="sample_quantity">1</string>
+    <string name="sub_error_message">Let\'s try again after a moment</string>
+    <string name="error_message">Hmm, something went wrong..</string>
+    <string name="try_again">try again</string>
 </resources>

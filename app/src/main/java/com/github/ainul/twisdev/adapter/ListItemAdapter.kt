@@ -13,11 +13,11 @@ import com.github.ainul.twisdev.ui.viewmodel.MainViewModel.Companion.CartItems
 
 class ListItemDiffUtil : DiffUtil.ItemCallback<CartItems>() {
     override fun areItemsTheSame(oldItem: CartItems, newItem: CartItems): Boolean {
-        return oldItem == newItem
+        return oldItem.itemModel.id == newItem.itemModel.id
     }
 
     override fun areContentsTheSame(oldItem: CartItems, newItem: CartItems): Boolean {
-        return oldItem.quantity == newItem.quantity
+        return oldItem == newItem
     }
 }
 
@@ -33,8 +33,7 @@ class ListItemAdapter(
     }
 
     override fun onBindViewHolder(holder: ListItemViewHolder, position: Int) {
-        val item = getItem(position)
-        holder.bind(item, position)
+        holder.bind(getItem(position))
     }
 
     class ListItemViewHolder(
@@ -43,7 +42,7 @@ class ListItemAdapter(
     ) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(data: CartItems, position: Int) {
+        fun bind(data: CartItems) {
             binding.data = data
             binding.quantity.text = data.quantity.toString()
             binding.thumbnail.run {
@@ -54,12 +53,15 @@ class ListItemAdapter(
                 if (item.defaultPhoto.imgPath.isNotBlank()) glide.load(path).into(this)
                 else glide.clear(this)
             }
+
+            // increase item quantity
             binding.increase.setOnClickListener {
-                listItemListener.onListItemAction(data, true, position)
+                listItemListener.onListItemAction(data, true)
             }
 
+            // decrease item quantity
             binding.decrease.setOnClickListener {
-                listItemListener.onListItemAction(data, false, position)
+                listItemListener.onListItemAction(data, false)
             }
         }
     }
