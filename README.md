@@ -20,3 +20,7 @@ ___
 - [x] can't add same item to cart
 - [x] increase & decrease quantity of item in cart screen
 - [x] summarize total price in cart screen
+
+___
+**Other**
+- [ ] update demo
