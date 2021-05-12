@@ -28,8 +28,9 @@ class ShoppingCartFragment : Fragment(), ListItemListener {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentShoppingCartBinding.inflate(inflater, container, false)
-        binding.viewmodel = viewmodel
 
+        // assign viewmodel and lifecycleOwner to this fragment so it can watch state-update
+        binding.viewmodel = viewmodel
         binding.lifecycleOwner = this
 
         setAnimationTransition()

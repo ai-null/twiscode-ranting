@@ -12,7 +12,6 @@ import java.lang.Exception
 class MainViewModel(app: Application) : AndroidViewModel(app) {
 
     private val repository = RantingRepository()
-
     // listItemData holder, used on initialization
     private val _fetchedListItemData = MutableLiveData<ViewState>()
     val fetchedListItemData: LiveData<ViewState> get() = _fetchedListItemData
@@ -62,27 +61,30 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     /**
-     * when quantity of item changes it call [updateData]
-     *
-     *
      * total price data holder,
      * for the public variable it transform Int to a currencyFormatted string
      * then show it to the UI.
      */
-    private val _totalPrice = MutableLiveData<Int>(0)
+    private val _totalPrice = MutableLiveData(0)
     val totalPrice: LiveData<String>
         get() = Transformations.map(_totalPrice) {
             Util.currencyFormatter(it.toString())
         }
 
+    /**
+     * this method used for holder for logic used in listItemLayout
+     * it takes [data] of the clicked item, and [increase] to choose inc/dec quantity
+     */
     fun updateData(data: CartItems, increase: Boolean) {
-        val iterator = listOfItems.iterator()
-
+        // update price data
         updatePrice(data.itemModel.price.toInt(), increase)
-        while (iterator.hasNext()) {
-            val item = iterator.next()
-            if (item.itemModel.id == data.itemModel.id && data.quantity.get() <= 0) {
-                iterator.remove()
+
+        // remove item when quantity reached 0
+        val iterator = listOfItems.iterator()
+        if (data.quantity.get() <= 0) {
+            while (iterator.hasNext()) {
+                val item = iterator.next()
+                if (item.itemModel.id == data.itemModel.id) iterator.remove()
             }
         }
     }
@@ -105,7 +107,7 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
 
     /**
      * Check whether item is already added on the cart or not.
-     * returns true if yes
+     * returns true if it added
      */
     private fun isItemAlreadyAdded(item: ItemModel): Boolean {
         var added = false
