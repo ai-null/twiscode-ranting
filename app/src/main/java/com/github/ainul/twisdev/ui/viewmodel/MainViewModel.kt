@@ -12,6 +12,7 @@ import java.lang.Exception
 class MainViewModel(app: Application) : AndroidViewModel(app) {
 
     private val repository = RantingRepository()
+
     // listItemData holder, used on initialization
     private val _fetchedListItemData = MutableLiveData<ViewState>()
     val fetchedListItemData: LiveData<ViewState> get() = _fetchedListItemData
@@ -50,7 +51,7 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
      */
     private val _itemsOnCart = MutableLiveData<List<CartItems>>()
     val itemsOnCart: LiveData<List<CartItems>> get() = _itemsOnCart
-    var listOfItems = arrayListOf<CartItems>()
+    var listOfItems = mutableListOf<CartItems>()
         private set
 
     fun addItemToCart(item: ItemModel) {
@@ -81,10 +82,14 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
 
         // remove item when quantity reached 0
         val iterator = listOfItems.iterator()
-        if (data.quantity.get() <= 0) {
+        if (data.quantity.get() <= 0) { // put condition here so it'll only called when data reached 0
             while (iterator.hasNext()) {
                 val item = iterator.next()
-                if (item.itemModel.id == data.itemModel.id) iterator.remove()
+                if (item.itemModel.id == data.itemModel.id) {
+                    iterator.remove().also {
+                        _itemsOnCart.value = listOfItems
+                    }
+                }
             }
         }
     }

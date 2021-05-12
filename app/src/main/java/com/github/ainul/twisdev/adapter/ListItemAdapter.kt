@@ -13,7 +13,7 @@ import com.github.ainul.twisdev.ui.viewmodel.MainViewModel.Companion.CartItems
 
 class ListItemDiffUtil : DiffUtil.ItemCallback<CartItems>() {
     override fun areItemsTheSame(oldItem: CartItems, newItem: CartItems): Boolean {
-        return oldItem == newItem
+        return oldItem.itemModel.id == newItem.itemModel.id
     }
 
     override fun areContentsTheSame(oldItem: CartItems, newItem: CartItems): Boolean {

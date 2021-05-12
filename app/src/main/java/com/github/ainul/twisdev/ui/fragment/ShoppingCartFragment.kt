@@ -61,7 +61,7 @@ class ShoppingCartFragment : Fragment(), ListItemListener {
 
     private fun updateLiveData() {
         viewmodel.itemsOnCart.observe(viewLifecycleOwner, {
-            adapter.submitList(it)
+            adapter.submitList(it.toList())
         })
     }
 
