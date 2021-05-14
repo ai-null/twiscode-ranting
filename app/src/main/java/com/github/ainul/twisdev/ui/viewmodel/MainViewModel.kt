@@ -7,7 +7,6 @@ import com.github.ainul.twisdev.network.ItemModel
 import com.github.ainul.twisdev.repository.RantingRepository
 import com.github.ainul.twisdev.util.Util
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import java.lang.Exception
 
 class MainViewModel(app: Application) : AndroidViewModel(app) {
@@ -47,20 +46,23 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
 
     /**
      * items liveData holder,
-     * it takes from [listOfItems] every time it update it'll also update value of [_itemsOnCart].
+     * it takes from [_listOfItems] every time it update it'll also update value of [_itemsOnCart].
      * since there's no database in this project this is the least I can do
      */
     private val _itemsOnCart = MutableLiveData<List<CartItems>>()
     val itemsOnCart: LiveData<List<CartItems>> get() = _itemsOnCart
 
     private val _listOfItems = mutableListOf<CartItems>()
-    val listOfItems: MutableList<CartItems> get() = _listOfItems
 
     fun addItemToCart(item: ItemModel) {
         if (!isItemAlreadyAdded(item)) {
             _listOfItems.add(CartItems(item))
             updatePrice(item.price.toInt())
         }
+    }
+
+    fun getCartItems() {
+        _itemsOnCart.value = _listOfItems
     }
 
     /**
@@ -89,7 +91,7 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
             val item = iterator.next()
             if (item.itemModel.id == data.itemModel.id) {
                 iterator.remove().also {
-                    _itemsOnCart.value = listOfItems
+                    _itemsOnCart.value = _listOfItems
                     updatePrice(data.itemModel.price.toInt(), false)
                 }
             }
@@ -118,7 +120,7 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
      */
     private fun isItemAlreadyAdded(item: ItemModel): Boolean {
         var added = false
-        listOfItems.forEach {
+        _listOfItems.forEach {
             if (it.itemModel == item) added = true
         }
 
