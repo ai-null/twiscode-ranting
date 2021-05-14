@@ -23,4 +23,4 @@ ___
 
 ___
 **Other**
-- [ ] update demo
+- [x] update demo
