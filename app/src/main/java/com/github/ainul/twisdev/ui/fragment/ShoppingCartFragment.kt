@@ -28,6 +28,7 @@ class ShoppingCartFragment : Fragment(), ListItemListener {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentShoppingCartBinding.inflate(inflater, container, false)
+        viewmodel.getCartItems()
 
         // assign viewmodel and lifecycleOwner to this fragment so it can watch state-update
         binding.viewmodel = viewmodel
@@ -53,7 +54,6 @@ class ShoppingCartFragment : Fragment(), ListItemListener {
         super.onViewCreated(view, savedInstanceState)
 
         adapter = ListItemAdapter(requireContext(), this)
-        adapter.submitList(viewmodel.listOfItems)
         binding.listView.adapter = adapter
 
         updateLiveData()

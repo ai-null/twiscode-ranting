@@ -78,6 +78,8 @@ class MainFragment : Fragment(), GridItemListener {
                     binding.errorMessageContainer.show()
                     viewmodel.hideActionBar(true)
                     Toast.makeText(requireContext(), "${state.message}", Toast.LENGTH_SHORT).show()
+                    // commented this for development purposes
+                    // viewmodel.refresh()
                 }
 
                 is ViewState.Succeed -> {

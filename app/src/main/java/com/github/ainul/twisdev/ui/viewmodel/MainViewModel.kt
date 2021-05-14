@@ -46,19 +46,23 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
 
     /**
      * items liveData holder,
-     * it takes from [listOfItems] every time it update it'll also update value of [_itemsOnCart].
+     * it takes from [_listOfItems] every time it update it'll also update value of [_itemsOnCart].
      * since there's no database in this project this is the least I can do
      */
     private val _itemsOnCart = MutableLiveData<List<CartItems>>()
     val itemsOnCart: LiveData<List<CartItems>> get() = _itemsOnCart
-    var listOfItems = mutableListOf<CartItems>()
-        private set
+
+    private val _listOfItems = mutableListOf<CartItems>()
 
     fun addItemToCart(item: ItemModel) {
         if (!isItemAlreadyAdded(item)) {
-            listOfItems.add(CartItems(item))
+            _listOfItems.add(CartItems(item))
             updatePrice(item.price.toInt())
         }
+    }
+
+    fun getCartItems() {
+        _itemsOnCart.value = _listOfItems
     }
 
     /**
@@ -72,23 +76,23 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
             Util.currencyFormatter(it.toString())
         }
 
-    /**
-     * this method used for holder for logic used in listItemLayout
-     * it takes [data] of the clicked item, and [increase] to choose inc/dec quantity
-     */
     fun updateData(data: CartItems, increase: Boolean) {
-        // update price data
-        updatePrice(data.itemModel.price.toInt(), increase)
+        if (data.quantity.get() <= 0) {
+            removeItem(data)
+        } else {
+            updatePrice(data.itemModel.price.toInt(), increase)
+        }
+    }
 
-        // remove item when quantity reached 0
-        val iterator = listOfItems.iterator()
-        if (data.quantity.get() <= 0) { // put condition here so it'll only called when data reached 0
-            while (iterator.hasNext()) {
-                val item = iterator.next()
-                if (item.itemModel.id == data.itemModel.id) {
-                    iterator.remove().also {
-                        _itemsOnCart.value = listOfItems
-                    }
+    private fun removeItem(data: CartItems) {
+        val iterator = _listOfItems.iterator()
+
+        while (iterator.hasNext()) {
+            val item = iterator.next()
+            if (item.itemModel.id == data.itemModel.id) {
+                iterator.remove().also {
+                    _itemsOnCart.value = _listOfItems
+                    updatePrice(data.itemModel.price.toInt(), false)
                 }
             }
         }
@@ -116,7 +120,7 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
      */
     private fun isItemAlreadyAdded(item: ItemModel): Boolean {
         var added = false
-        listOfItems.forEach {
+        _listOfItems.forEach {
             if (it.itemModel == item) added = true
         }
 
