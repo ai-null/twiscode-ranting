@@ -7,6 +7,7 @@ import com.github.ainul.twisdev.network.ItemModel
 import com.github.ainul.twisdev.repository.RantingRepository
 import com.github.ainul.twisdev.util.Util
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.lang.Exception
 
 class MainViewModel(app: Application) : AndroidViewModel(app) {
@@ -51,12 +52,13 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
      */
     private val _itemsOnCart = MutableLiveData<List<CartItems>>()
     val itemsOnCart: LiveData<List<CartItems>> get() = _itemsOnCart
-    var listOfItems = mutableListOf<CartItems>()
-        private set
+
+    private val _listOfItems = mutableListOf<CartItems>()
+    val listOfItems: MutableList<CartItems> get() = _listOfItems
 
     fun addItemToCart(item: ItemModel) {
         if (!isItemAlreadyAdded(item)) {
-            listOfItems.add(CartItems(item))
+            _listOfItems.add(CartItems(item))
             updatePrice(item.price.toInt())
         }
     }
@@ -72,23 +74,23 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
             Util.currencyFormatter(it.toString())
         }
 
-    /**
-     * this method used for holder for logic used in listItemLayout
-     * it takes [data] of the clicked item, and [increase] to choose inc/dec quantity
-     */
     fun updateData(data: CartItems, increase: Boolean) {
-        // update price data
-        updatePrice(data.itemModel.price.toInt(), increase)
+        if (data.quantity.get() <= 0) {
+            removeItem(data)
+        } else {
+            updatePrice(data.itemModel.price.toInt(), increase)
+        }
+    }
 
-        // remove item when quantity reached 0
-        val iterator = listOfItems.iterator()
-        if (data.quantity.get() <= 0) { // put condition here so it'll only called when data reached 0
-            while (iterator.hasNext()) {
-                val item = iterator.next()
-                if (item.itemModel.id == data.itemModel.id) {
-                    iterator.remove().also {
-                        _itemsOnCart.value = listOfItems
-                    }
+    private fun removeItem(data: CartItems) {
+        val iterator = _listOfItems.iterator()
+
+        while (iterator.hasNext()) {
+            val item = iterator.next()
+            if (item.itemModel.id == data.itemModel.id) {
+                iterator.remove().also {
+                    _itemsOnCart.value = listOfItems
+                    updatePrice(data.itemModel.price.toInt(), false)
                 }
             }
         }
