@@ -1,6 +1,8 @@
 package com.github.ainul.twisdev.network
 
+import com.github.ainul.twisdev.network.interceptor.HttpInterceptor
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.POST
@@ -10,9 +12,10 @@ const val BASE_URL = "https://ranting.twisdev.com/index.php/rest/"
 const val GET_DATA = "items/search/api_key/teampsisthebest/"
 
 private val okHttpClient = OkHttpClient().newBuilder()
-    .connectTimeout(8, TimeUnit.SECONDS)
-    .readTimeout(8, TimeUnit.SECONDS)
-    .writeTimeout(15, TimeUnit.SECONDS)
+    .connectTimeout(30, TimeUnit.SECONDS)
+    .readTimeout(30, TimeUnit.SECONDS)
+    .writeTimeout(30, TimeUnit.SECONDS)
+    .addInterceptor(HttpInterceptor.httpLoggingInterceptor())
     .build()
 
 private val retrofit = Retrofit.Builder()
