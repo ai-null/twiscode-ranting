@@ -1,6 +1,5 @@
 package com.github.ainul.twisdev.ui.viewmodel
 
-import android.app.Application
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.*
 import com.github.ainul.twisdev.network.ItemModel
@@ -9,9 +8,7 @@ import com.github.ainul.twisdev.util.Util
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
-class MainViewModel(app: Application) : AndroidViewModel(app) {
-
-    private val repository = RantingRepository()
+class MainViewModel constructor(private val repository: RantingRepository) : ViewModel() {
 
     // listItemData holder, used on initialization
     private val _fetchedListItemData = MutableLiveData<ViewState>()

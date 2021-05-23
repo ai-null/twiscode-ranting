@@ -1,14 +1,16 @@
-package com.github.ainul.twisdev.network
+ package com.github.ainul.twisdev.network
 
 import com.github.ainul.twisdev.network.interceptor.HttpInterceptor
+import dagger.Module
+import dagger.Provides
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.POST
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
-const val BASE_URL = "https://ranting.twisdev.com/index.php/rest/"
+ const val BASE_URL = "https://ranting.twisdev.com/index.php/rest/"
 const val GET_DATA = "items/search/api_key/teampsisthebest/"
 
 private val okHttpClient = OkHttpClient().newBuilder()
@@ -29,6 +31,7 @@ interface RantingService {
     suspend fun getListItem(): List<ItemModel>
 }
 
+@Module
 object RantingNetwork {
     val service: RantingService by lazy {
         retrofit.create(RantingService::class.java)
