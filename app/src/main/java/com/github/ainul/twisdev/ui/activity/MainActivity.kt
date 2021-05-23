@@ -2,20 +2,25 @@ package com.github.ainul.twisdev.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.github.ainul.twisdev.R
+import com.github.ainul.twisdev.ViewModelFactory
 import com.github.ainul.twisdev.databinding.ActivityMainBinding
+import com.github.ainul.twisdev.di.DaggerAppComponent
 import com.github.ainul.twisdev.ui.viewmodel.MainViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
     // reference, viewmodel, binding, view-components etc...
-    private val viewmodel: MainViewModel by viewModels()
+    @Inject
+    lateinit var factory: ViewModelFactory
+    private lateinit var viewmodel: MainViewModel
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
 
@@ -24,6 +29,11 @@ class MainActivity : AppCompatActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.lifecycleOwner = this
+
+        val appComponent = DaggerAppComponent.create()
+        appComponent.inject(this)
+
+        viewmodel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
 
         setupNavController()
         updateLiveData()
