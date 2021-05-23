@@ -1,8 +1,7 @@
-package com.github.ainul.twisdev.network
+ package com.github.ainul.twisdev.network
 
 import com.github.ainul.twisdev.network.interceptor.HttpInterceptor
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.POST

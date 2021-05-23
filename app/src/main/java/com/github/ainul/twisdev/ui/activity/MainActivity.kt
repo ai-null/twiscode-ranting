@@ -25,6 +25,11 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.lifecycleOwner = this
 
+        setupNavController()
+        updateLiveData()
+    }
+
+    private fun setupNavController() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
@@ -34,8 +39,6 @@ class MainActivity : AppCompatActivity() {
             this,
             navController
         )
-
-        updateLiveData()
     }
 
     private fun updateLiveData() {
