@@ -1,4 +1,4 @@
-package com.github.ainul.twisdev.ui.viewmodel
+package com.github.ainul.twisdev.ui.main.viewmodel
 
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.*

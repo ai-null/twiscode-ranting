@@ -1,4 +1,4 @@
-package com.github.ainul.twisdev.ui.fragment
+package com.github.ainul.twisdev.ui.main.view.fragment
 
 import android.os.Bundle
 import android.view.*
@@ -8,12 +8,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.github.ainul.twisdev.R
-import com.github.ainul.twisdev.ui.adapter.GridItemAdapter
-import com.github.ainul.twisdev.ui.adapter.listener.GridItemListener
+import com.github.ainul.twisdev.ui.main.adapter.GridItemAdapter
+import com.github.ainul.twisdev.ui.main.adapter.listener.GridItemListener
 import com.github.ainul.twisdev.databinding.FragmentMainBinding
 import com.github.ainul.twisdev.data.model.ItemModel
-import com.github.ainul.twisdev.ui.viewmodel.MainViewModel
-import com.github.ainul.twisdev.ui.viewmodel.ViewState
+import com.github.ainul.twisdev.ui.main.viewmodel.MainViewModel
+import com.github.ainul.twisdev.ui.main.viewmodel.ViewState
 import com.github.ainul.twisdev.util.hide
 import com.github.ainul.twisdev.util.show
 import com.google.android.material.transition.MaterialSharedAxis

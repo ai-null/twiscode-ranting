@@ -1,4 +1,4 @@
-package com.github.ainul.twisdev.ui.fragment
+package com.github.ainul.twisdev.ui.main.view.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.github.ainul.twisdev.R
-import com.github.ainul.twisdev.ui.adapter.ListItemAdapter
-import com.github.ainul.twisdev.ui.adapter.listener.ListItemListener
+import com.github.ainul.twisdev.ui.main.adapter.ListItemAdapter
+import com.github.ainul.twisdev.ui.main.adapter.listener.ListItemListener
 import com.github.ainul.twisdev.databinding.FragmentShoppingCartBinding
-import com.github.ainul.twisdev.ui.viewmodel.MainViewModel
+import com.github.ainul.twisdev.ui.main.viewmodel.MainViewModel
 import com.google.android.material.transition.MaterialSharedAxis
 
 class ShoppingCartFragment : Fragment(), ListItemListener {
