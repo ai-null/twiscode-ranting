@@ -1,7 +1,6 @@
 package com.github.ainul.twisdev.data.repository
 
 import com.github.ainul.twisdev.data.model.ItemModel
-import com.github.ainul.twisdev.data.network.RantingNetwork
 import com.github.ainul.twisdev.data.network.RantingService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
