@@ -7,8 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class RantingRepository @Inject constructor(rantingNetwork: RantingNetwork) {
-    private val service: RantingService = rantingNetwork.service
+class RantingRepository @Inject constructor(private val service: RantingService) {
 
     suspend fun fetchDataFromNetwork(): List<ItemModel> {
         return withContext(Dispatchers.IO) { service.getListItem() }
