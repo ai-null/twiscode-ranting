@@ -1,4 +1,4 @@
-package com.github.ainul.twisdev.adapter.listener
+package com.github.ainul.twisdev.ui.adapter.listener
 
 import com.github.ainul.twisdev.ui.viewmodel.MainViewModel.Companion.CartItems
 

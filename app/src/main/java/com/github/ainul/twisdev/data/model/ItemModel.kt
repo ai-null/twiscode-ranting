@@ -1,4 +1,4 @@
-package com.github.ainul.twisdev.network
+package com.github.ainul.twisdev.data.model
 
 import com.google.gson.annotations.SerializedName
 
@@ -28,34 +28,4 @@ data class ItemModel(
     @SerializedName("condition_of_item")
     val itemCondition: ItemCondition,
     val user: User,
-)
-
-data class DefaultPhoto(
-    @SerializedName("img_id")
-    val imgId: String,
-    @SerializedName("img_parent_id")
-    val imgParentId: String,
-    @SerializedName("img_type")
-    val imgType: String,
-    @SerializedName("img_path")
-    val imgPath: String,
-)
-
-data class ItemCondition(
-    val id: String,
-    val name: String,
-    val status: String,
-    @SerializedName("added_date")
-    val addedDate: String,
-)
-
-data class User(
-    @SerializedName("user_id")
-    val userId: String,
-    @SerializedName("user_name")
-    val userName: String,
-    @SerializedName("user_email")
-    val userEmail: String,
-    @SerializedName("user_phone")
-    val userPhone: String,
 )

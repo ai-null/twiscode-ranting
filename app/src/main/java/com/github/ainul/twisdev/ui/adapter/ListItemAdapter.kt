@@ -1,4 +1,4 @@
-package com.github.ainul.twisdev.adapter
+package com.github.ainul.twisdev.ui.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,9 +7,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.github.ainul.twisdev.adapter.listener.ListItemListener
+import com.github.ainul.twisdev.ui.adapter.listener.ListItemListener
 import com.github.ainul.twisdev.databinding.ListItemLayoutBinding
 import com.github.ainul.twisdev.ui.viewmodel.MainViewModel.Companion.CartItems
+import com.github.ainul.twisdev.util.Constants.IMG_URL
 
 class ListItemDiffUtil : DiffUtil.ItemCallback<CartItems>() {
     override fun areItemsTheSame(oldItem: CartItems, newItem: CartItems): Boolean {
@@ -48,7 +49,7 @@ class ListItemAdapter(
             binding.thumbnail.run {
                 val item = data.itemModel
                 val glide = Glide.with(this)
-                val path = "https://ranting.twisdev.com/uploads/${item.defaultPhoto.imgPath}"
+                val path: String = IMG_URL + item.defaultPhoto.imgPath
 
                 if (item.defaultPhoto.imgPath.isNotBlank()) glide.load(path).into(this)
                 else glide.clear(this)

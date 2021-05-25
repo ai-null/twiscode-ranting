@@ -2,7 +2,7 @@ package com.github.ainul.twisdev
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.github.ainul.twisdev.repository.RantingRepository
+import com.github.ainul.twisdev.data.repository.RantingRepository
 import com.github.ainul.twisdev.ui.viewmodel.MainViewModel
 import java.lang.IllegalArgumentException
 import javax.inject.Inject

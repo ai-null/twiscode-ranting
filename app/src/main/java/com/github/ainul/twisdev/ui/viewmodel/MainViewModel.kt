@@ -2,8 +2,8 @@ package com.github.ainul.twisdev.ui.viewmodel
 
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.*
-import com.github.ainul.twisdev.network.ItemModel
-import com.github.ainul.twisdev.repository.RantingRepository
+import com.github.ainul.twisdev.data.model.ItemModel
+import com.github.ainul.twisdev.data.repository.RantingRepository
 import com.github.ainul.twisdev.util.Util
 import kotlinx.coroutines.launch
 import java.lang.Exception

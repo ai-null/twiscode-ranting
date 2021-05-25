@@ -1,4 +1,4 @@
-package com.github.ainul.twisdev.network.interceptor
+package com.github.ainul.twisdev.data.network.interceptor
 
 import android.util.Log
 import okhttp3.logging.HttpLoggingInterceptor

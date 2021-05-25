@@ -1,8 +1,8 @@
-package com.github.ainul.twisdev.repository
+package com.github.ainul.twisdev.data.repository
 
-import com.github.ainul.twisdev.network.ItemModel
-import com.github.ainul.twisdev.network.RantingNetwork
-import com.github.ainul.twisdev.network.RantingService
+import com.github.ainul.twisdev.data.model.ItemModel
+import com.github.ainul.twisdev.data.network.RantingNetwork
+import com.github.ainul.twisdev.data.network.RantingService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

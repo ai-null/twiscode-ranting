@@ -10,7 +10,7 @@ import androidx.navigation.ui.NavigationUI
 import com.github.ainul.twisdev.R
 import com.github.ainul.twisdev.ViewModelFactory
 import com.github.ainul.twisdev.databinding.ActivityMainBinding
-import com.github.ainul.twisdev.di.DaggerAppComponent
+import com.github.ainul.twisdev.di.component.DaggerAppComponent
 import com.github.ainul.twisdev.ui.viewmodel.MainViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import javax.inject.Inject
