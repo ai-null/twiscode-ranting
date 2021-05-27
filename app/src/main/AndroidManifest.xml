@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Twisdev">
-        <activity android:name=".ui.activity.MainActivity">
+        <activity android:name="com.github.ainul.twisdev.ui.main.view.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

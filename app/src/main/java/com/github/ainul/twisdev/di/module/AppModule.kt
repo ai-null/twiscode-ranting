@@ -1,6 +1,7 @@
 package com.github.ainul.twisdev.di.module
 
-import com.github.ainul.twisdev.network.RantingNetwork
+import com.github.ainul.twisdev.data.network.RetrofitBuilder
+import com.github.ainul.twisdev.data.network.RantingService
 import dagger.Module
 import dagger.Provides
 
@@ -8,5 +9,7 @@ import dagger.Provides
 class AppModule() {
 
     @Provides
-    fun provideNetwork() = RantingNetwork
+    fun provideService(): RantingService {
+        return RetrofitBuilder.service
+    }
 }

@@ -7,7 +7,7 @@
 
         <variable
             name="viewmodel"
-            type="com.github.ainul.twisdev.ui.viewmodel.MainViewModel" />
+            type="com.github.ainul.twisdev.ui.main.viewmodel.MainViewModel" />
     </data>
 
     <RelativeLayout

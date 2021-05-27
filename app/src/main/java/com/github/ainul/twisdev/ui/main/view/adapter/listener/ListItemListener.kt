@@ -1,6 +1,6 @@
-package com.github.ainul.twisdev.adapter.listener
+package com.github.ainul.twisdev.ui.main.view.adapter.listener
 
-import com.github.ainul.twisdev.ui.viewmodel.MainViewModel.Companion.CartItems
+import com.github.ainul.twisdev.ui.main.viewmodel.MainViewModel.Companion.CartItems
 
 interface ListItemListener {
     fun onListItemAction(data: CartItems, increase: Boolean) {

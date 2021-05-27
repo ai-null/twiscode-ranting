@@ -1,4 +1,4 @@
-package com.github.ainul.twisdev.adapter
+package com.github.ainul.twisdev.ui.main.view.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,9 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.github.ainul.twisdev.adapter.listener.GridItemListener
+import com.github.ainul.twisdev.ui.main.view.adapter.listener.GridItemListener
 import com.github.ainul.twisdev.databinding.GridItemLayoutBinding
-import com.github.ainul.twisdev.network.ItemModel
+import com.github.ainul.twisdev.data.model.ItemModel
+import com.github.ainul.twisdev.util.Constants.IMG_URL
 
 class GridItemAdapter(private val context: Context, private val listener: GridItemListener) :
     RecyclerView.Adapter<GridItemAdapter.GridItemViewHolder>() {
@@ -47,7 +48,7 @@ class GridItemAdapter(private val context: Context, private val listener: GridIt
             // show thumbnail if there's one, otherwise clear image
             binding.thumbnail.run {
                 val glide = Glide.with(this)
-                val path = "https://ranting.twisdev.com/uploads/${data.defaultPhoto.imgPath}"
+                val path: String = IMG_URL + data.defaultPhoto.imgPath
 
                 if (data.defaultPhoto.imgPath.isNotBlank()) glide.load(path).into(this)
                 else glide.clear(this)

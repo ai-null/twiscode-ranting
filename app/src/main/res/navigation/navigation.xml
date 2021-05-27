@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.github.ainul.twisdev.ui.fragment.MainFragment"
+        android:name="com.github.ainul.twisdev.ui.main.view.fragment.MainFragment"
         android:label="@string/app_name">
         <action
             android:id="@+id/action_mainFragment_to_shoppingCartFragment"
@@ -15,6 +15,6 @@
     </fragment>
     <fragment
         android:id="@+id/shoppingCartFragment"
-        android:name="com.github.ainul.twisdev.ui.fragment.ShoppingCartFragment"
+        android:name="com.github.ainul.twisdev.ui.main.view.fragment.ShoppingCartFragment"
         android:label="@string/ShoppingCartFragment" />
 </navigation>
