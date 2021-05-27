@@ -80,7 +80,7 @@ dependencies {
 
     // lightweight image processing
     implementation 'com.github.bumptech.glide:glide:4.12.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+    kapt 'com.github.bumptech.glide:compiler:4.12.0'
 
     // jetpack fragment
     def nav_version = "2.3.5"
