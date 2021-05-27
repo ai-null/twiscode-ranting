@@ -1,4 +1,4 @@
-package com.github.ainul.twisdev.ui.main.adapter
+package com.github.ainul.twisdev.ui.main.view.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.github.ainul.twisdev.ui.main.adapter.listener.GridItemListener
+import com.github.ainul.twisdev.ui.main.view.adapter.listener.GridItemListener
 import com.github.ainul.twisdev.databinding.GridItemLayoutBinding
 import com.github.ainul.twisdev.data.model.ItemModel
 import com.github.ainul.twisdev.util.Constants.IMG_URL

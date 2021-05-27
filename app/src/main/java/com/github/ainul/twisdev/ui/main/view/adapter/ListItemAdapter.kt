@@ -1,4 +1,4 @@
-package com.github.ainul.twisdev.ui.main.adapter
+package com.github.ainul.twisdev.ui.main.view.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.github.ainul.twisdev.databinding.ListItemLayoutBinding
-import com.github.ainul.twisdev.ui.main.adapter.listener.ListItemListener
+import com.github.ainul.twisdev.ui.main.view.adapter.listener.ListItemListener
 import com.github.ainul.twisdev.ui.main.viewmodel.MainViewModel.Companion.CartItems
 import com.github.ainul.twisdev.util.Constants.IMG_URL
 

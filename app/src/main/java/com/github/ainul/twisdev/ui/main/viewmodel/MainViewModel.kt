@@ -4,6 +4,7 @@ import androidx.databinding.ObservableInt
 import androidx.lifecycle.*
 import com.github.ainul.twisdev.data.model.ItemModel
 import com.github.ainul.twisdev.data.repository.RantingRepository
+import com.github.ainul.twisdev.ui.main.viewstate.MainState
 import com.github.ainul.twisdev.util.Util
 import kotlinx.coroutines.launch
 import java.lang.Exception
@@ -11,22 +12,22 @@ import java.lang.Exception
 class MainViewModel constructor(private val repository: RantingRepository) : ViewModel() {
 
     // listItemData holder, used on initialization
-    private val _fetchedListItemData = MutableLiveData<ViewState>()
-    val fetchedListItemData: LiveData<ViewState> get() = _fetchedListItemData
+    private val _fetchedListItemData = MutableLiveData<MainState>()
+    val fetchedListItemData: LiveData<MainState> get() = _fetchedListItemData
 
     init {
         refresh()
     }
 
     fun refresh() {
-        _fetchedListItemData.value = ViewState.Loading
+        _fetchedListItemData.value = MainState.Loading
         viewModelScope.launch {
             try {
                 repository.fetchDataFromNetwork().also {
-                    _fetchedListItemData.value = ViewState.Succeed(it)
+                    _fetchedListItemData.value = MainState.Succeed(it)
                 }
             } catch (e: Exception) {
-                _fetchedListItemData.value = ViewState.Failure(e.message)
+                _fetchedListItemData.value = MainState.Failure(e.message)
             }
         }
     }
@@ -144,10 +145,4 @@ class MainViewModel constructor(private val repository: RantingRepository) : Vie
             }
         }
     }
-}
-
-sealed class ViewState {
-    object Loading : ViewState()
-    data class Succeed(val data: List<ItemModel>) : ViewState()
-    data class Failure(val message: String?) : ViewState()
 }

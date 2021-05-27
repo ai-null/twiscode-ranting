@@ -1,4 +1,5 @@
 package com.github.ainul.twisdev.ui.main.intent
 
-class MainIntent {
+sealed class MainIntent {
+    object FetchUser: MainIntent()
 }
