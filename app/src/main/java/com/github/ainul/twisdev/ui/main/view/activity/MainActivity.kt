@@ -73,4 +73,9 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp()
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModelStore.clear()
+    }
 }

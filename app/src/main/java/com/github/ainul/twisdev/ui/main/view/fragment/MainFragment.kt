@@ -6,17 +6,20 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.github.ainul.twisdev.R
 import com.github.ainul.twisdev.ui.main.view.adapter.GridItemAdapter
 import com.github.ainul.twisdev.ui.main.view.adapter.listener.GridItemListener
 import com.github.ainul.twisdev.databinding.FragmentMainBinding
 import com.github.ainul.twisdev.data.model.ItemModel
+import com.github.ainul.twisdev.ui.main.intent.MainIntent
 import com.github.ainul.twisdev.ui.main.viewmodel.MainViewModel
 import com.github.ainul.twisdev.ui.main.viewstate.MainState
 import com.github.ainul.twisdev.util.hide
 import com.github.ainul.twisdev.util.show
 import com.google.android.material.transition.MaterialSharedAxis
+import kotlinx.coroutines.launch
 
 class MainFragment : Fragment(), GridItemListener {
 
@@ -47,7 +50,9 @@ class MainFragment : Fragment(), GridItemListener {
 
         val refreshBtn = binding.errorMessageContainer.findViewById<Button>(R.id.refreshButton)
         refreshBtn.setOnClickListener {
-            viewmodel.refresh()
+            lifecycleScope.launch {
+                viewmodel.userIntent.send(MainIntent.Refresh)
+            }
         }
     }
 

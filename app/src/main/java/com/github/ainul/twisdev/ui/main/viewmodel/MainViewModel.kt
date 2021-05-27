@@ -4,8 +4,12 @@ import androidx.databinding.ObservableInt
 import androidx.lifecycle.*
 import com.github.ainul.twisdev.data.model.ItemModel
 import com.github.ainul.twisdev.data.repository.RantingRepository
+import com.github.ainul.twisdev.ui.main.intent.MainIntent
 import com.github.ainul.twisdev.ui.main.viewstate.MainState
 import com.github.ainul.twisdev.util.Util
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
@@ -15,11 +19,25 @@ class MainViewModel constructor(private val repository: RantingRepository) : Vie
     private val _fetchedListItemData = MutableLiveData<MainState>()
     val fetchedListItemData: LiveData<MainState> get() = _fetchedListItemData
 
+    // user intent
+    val userIntent = Channel<MainIntent>(Channel.UNLIMITED)
+
     init {
         refresh()
+        handleIntent()
     }
 
-    fun refresh() {
+    private fun handleIntent() {
+        viewModelScope.launch {
+            userIntent.consumeAsFlow().collect {
+                when (it) {
+                    MainIntent.Refresh -> refresh()
+                }
+            }
+        }
+    }
+
+    private fun refresh() {
         _fetchedListItemData.value = MainState.Loading
         viewModelScope.launch {
             try {
