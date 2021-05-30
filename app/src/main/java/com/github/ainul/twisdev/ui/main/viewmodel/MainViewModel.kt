@@ -31,7 +31,8 @@ class MainViewModel constructor(private val repository: RantingRepository) : Vie
         viewModelScope.launch {
             userIntent.consumeAsFlow().collect {
                 when (it) {
-                    MainIntent.Refresh -> refresh()
+                    is MainIntent.Refresh -> refresh()
+                    is MainIntent.AddItemToCart -> addItemToCart(it.item)
                 }
             }
         }
@@ -70,7 +71,7 @@ class MainViewModel constructor(private val repository: RantingRepository) : Vie
 
     private val _listOfItems = mutableListOf<CartItems>()
 
-    fun addItemToCart(item: ItemModel) {
+    private fun addItemToCart(item: ItemModel) {
         if (!isItemAlreadyAdded(item)) {
             _listOfItems.add(CartItems(item))
             updatePrice(item.price.toInt())

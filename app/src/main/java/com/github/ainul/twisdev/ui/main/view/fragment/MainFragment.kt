@@ -102,7 +102,9 @@ class MainFragment : Fragment(), GridItemListener {
 
     /** Setup GridItemRecyclerView */
     override fun addItemToCart(e: ItemModel) {
-        viewmodel.addItemToCart(e)
+        lifecycleScope.launch {
+            viewmodel.userIntent.send(MainIntent.AddItemToCart(e))
+        }
     }
 
     private fun setupRecyclerView() {
