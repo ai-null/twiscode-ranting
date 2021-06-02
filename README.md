@@ -1,4 +1,4 @@
-# twiscode-ranting
+# twiscode-ranting [![CodeFactor](https://www.codefactor.io/repository/github/ai-null/twiscode-ranting/badge)](https://www.codefactor.io/repository/github/ai-null/twiscode-ranting)
 
 <img src="https://raw.githubusercontent.com/ai-null/twiscode-ranting/master/demo/twisdev.gif" height="400px" />
 
